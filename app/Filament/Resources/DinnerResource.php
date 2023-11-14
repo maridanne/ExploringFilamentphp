@@ -2,9 +2,9 @@
 
 namespace App\Filament\Resources;
 
-use App\Filament\Resources\BoardersResource\Pages;
-use App\Filament\Resources\BoardersResource\RelationManagers;
-use App\Models\Boarders;
+use App\Filament\Resources\DinnerResource\Pages;
+use App\Filament\Resources\DinnerResource\RelationManagers;
+use App\Models\Dinner;
 use Filament\Forms;
 use Filament\Forms\Form;
 use Filament\Resources\Resource;
@@ -13,22 +13,18 @@ use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
 
-class BoardersResource extends Resource
+class DinnerResource extends Resource
 {
-    protected static ?string $model = Boarders::class;
+    protected static ?string $model = Dinner::class;
 
     protected static ?string $navigationIcon = 'heroicon-o-rectangle-stack';
-
-    protected static ?string $recordTitleAttribute = 'name';
 
     public static function form(Form $form): Form
     {
         return $form
             ->schema([
-                Forms\Components\TextInput::make('name')->required(),
-                Forms\Components\TextInput::make('course')->required(),
-                Forms\Components\TextInput::make('age')->required(),
-                //
+                Forms\Components\TextInput::make('name'),
+                Forms\Components\TextInput::make('price'),
             ]);
     }
 
@@ -37,9 +33,7 @@ class BoardersResource extends Resource
         return $table
             ->columns([
                 Tables\Columns\TextColumn::make('name'),
-                Tables\Columns\TextColumn::make('course'),
-                Tables\Columns\TextColumn::make('age'),
-                //
+                Tables\Columns\TextColumn::make('price'),
             ])
             ->filters([
                 //
@@ -64,9 +58,9 @@ class BoardersResource extends Resource
     public static function getPages(): array
     {
         return [
-            'index' => Pages\ListBoarders::route('/'),
-            'create' => Pages\CreateBoarders::route('/create'),
-            'edit' => Pages\EditBoarders::route('/{record}/edit'),
+            'index' => Pages\ListDinners::route('/'),
+            'create' => Pages\CreateDinner::route('/create'),
+            'edit' => Pages\EditDinner::route('/{record}/edit'),
         ];
     }
 }
