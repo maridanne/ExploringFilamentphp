@@ -39,6 +39,8 @@ class BoardersResource extends Resource
                 Tables\Columns\TextColumn::make('name'),
                 Tables\Columns\TextColumn::make('course'),
                 Tables\Columns\TextColumn::make('age'),
+                Tables\Columns\TextColumn::make('created_at'),
+                Tables\Columns\TextColumn::make('updated_at'),
                 //
             ])
             ->filters([
