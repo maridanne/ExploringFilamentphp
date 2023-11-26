@@ -15,10 +15,10 @@ return new class extends Migration
             $table->id();
             $table->date('date_of_birth')->nullable();
             $table->string('name')->nullable();
-            $table->foreignId('owner_id')->constrained('owners')->cascadeOnDelete();
+            $table->foreignId('owner_id')->constrained('owners')->cascadeOnDelete()->nullable();
             $table->string('type')->nullable();
             $table->timestamps();
-            });
+        });
     }
 
     /**

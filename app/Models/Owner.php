@@ -14,4 +14,6 @@ class Owner extends Model
     {
         return $this->hasMany(Patient::class);
     }
+
+    protected $fillable = ['name', 'email', 'phone',];
 }

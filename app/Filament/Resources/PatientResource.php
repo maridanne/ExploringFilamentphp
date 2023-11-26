@@ -23,20 +23,60 @@ class PatientResource extends Resource
     {
         return $form
             ->schema([
-                Forms\Components\TextInput::make('name')
+                Forms\Components\TextInput::make('name'),
+                Forms\Components\Select::make('type')
+                ->options([
+                    'cat'=>'Cat',
+                    'dog'=>'Dog',
+                    'rabbit'=>'Rabbit'
+                ])
                 ->required()
-                ->maxLength(255)
+                ->maxWidth(255),
+                Forms\Components\DatePicker::make('date_of_birth')
+                ->required()
+                ->maxDate(now()),
+                Forms\Components\Select::make('owner_id')
+                ->relationship('owner', 'name')
+                ->required()
+                ->searchable()
+                ->preload()
+                ->createOptionForm([
+                    Forms\Components\TextInput::make('name')
+                        ->required()
+                        ->maxWidth(255),
+                    Forms\Components\TextInput::make('email')
+                        ->label('Email address')
+                        ->email()
+                        ->required()
+                        ->maxWidth(255),
+                    Forms\Components\TextInput::make('phone')
+                        ->label('Phone number')
+                        ->tel()
+                        ->required(),
+                ])
+                ->required()
             ]);
+
     }
 
     public static function table(Table $table): Table
     {
         return $table
             ->columns([
-                //
+                Tables\Columns\TextColumn::make('name'),
+                Tables\Columns\TextColumn::make('type'),
+                Tables\Columns\TextColumn::make('date_of_birth')
+                ->sortable(),
+                Tables\Columns\TextColumn::make('owner.name')
+                ->searchable(),
             ])
             ->filters([
-                //
+                Tables\Filters\SelectFilter::make('type')
+                ->options([
+                    'cat' => 'Cat',
+                    'dog' => 'Dog',
+                    'rabbit' => 'Rabbit',
+                ]),
             ])
             ->actions([
                 Tables\Actions\EditAction::make(),
@@ -54,7 +94,7 @@ class PatientResource extends Resource
     public static function getRelations(): array
     {
         return [
-            //
+            RelationManagers\TreatmentsRelationManager::class,
         ];
     }
 
