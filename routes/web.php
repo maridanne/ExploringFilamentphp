@@ -1,6 +1,7 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use Illuminate\Support\Facades\DB;
 
 /*
 |--------------------------------------------------------------------------
@@ -14,5 +15,11 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get('/', function () {
-    return view('welcome');
+    // return view('welcome');
+    $users = DB::select("select * from users");
+
+    // $user = DB::insert('insert into users (name, email, password) values (?, ?, ?)', ['Marie', 'mariekoy@gmail.com', 'monalisa']);
+    // $user = DB::update("update users set email='monalisa@gmail.com' where id=2");
+    // $user = DB::delete('delete from users where id=2');
+    dd($users);
 });
